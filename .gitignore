@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+.eggs/
+.venv/
+venv/
+env/
+.env
+*.env
+!.env.example
+
+# Next.js
+.next/
+out/
+build/
+
+# Misc
+.DS_Store
+*.log
+*.tmp
+.idea/
+.vscode/
+*.swp
+
+# Supabase
+supabase/.temp/
+supabase/.branches/
+
+# Test coverage
+.coverage
+htmlcov/
+.pytest_cache/
