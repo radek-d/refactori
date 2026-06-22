@@ -1,0 +1,272 @@
+@import "tailwindcss";
+
+/* ══════════════════════════════════════════════════════════
+   DESIGN TOKENS
+══════════════════════════════════════════════════════════ */
+:root {
+  /* Brand */
+  --color-brand: 250 84% 67%;          /* #7C5CFC */
+  --color-brand-dark: 250 84% 56%;
+  --color-brand-glow: 250 84% 67% / 0.35;
+
+  /* Surfaces */
+  --color-bg: 222 47% 5%;              /* near-black */
+  --color-surface: 222 40% 8%;
+  --color-surface-2: 222 35% 12%;
+  --color-surface-3: 222 30% 16%;
+  --color-border: 222 25% 20%;
+
+  /* Text */
+  --color-text: 210 20% 94%;
+  --color-text-muted: 210 15% 55%;
+  --color-text-subtle: 210 12% 38%;
+
+  /* Accent palette */
+  --color-green: 152 69% 46%;
+  --color-amber: 38 92% 55%;
+  --color-red: 4 86% 58%;
+  --color-cyan: 192 91% 54%;
+
+  /* Layout */
+  --radius: 0.75rem;
+  --radius-sm: 0.5rem;
+  --radius-lg: 1rem;
+}
+
+/* ══════════════════════════════════════════════════════════
+   BASE
+══════════════════════════════════════════════════════════ */
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: var(--font-inter), system-ui, sans-serif;
+    background-color: hsl(var(--color-bg));
+    color: hsl(var(--color-text));
+    line-height: 1.6;
+    min-height: 100dvh;
+  }
+
+  ::selection {
+    background: hsl(var(--color-brand) / 0.3);
+    color: hsl(var(--color-text));
+  }
+}
+
+/* ══════════════════════════════════════════════════════════
+   SCROLLBAR
+══════════════════════════════════════════════════════════ */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: hsl(var(--color-surface)); }
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--color-border));
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover { background: hsl(var(--color-brand) / 0.6); }
+
+/* ══════════════════════════════════════════════════════════
+   COMPONENT UTILITIES
+══════════════════════════════════════════════════════════ */
+@layer utilities {
+  /* Glass card */
+  .glass {
+    background: hsl(var(--color-surface) / 0.7);
+    backdrop-filter: blur(16px);
+    border: 1px solid hsl(var(--color-border));
+    border-radius: var(--radius);
+  }
+
+  /* Glow border on focus */
+  .glow-focus:focus-within {
+    outline: none;
+    box-shadow:
+      0 0 0 1px hsl(var(--color-brand) / 0.5),
+      0 0 20px hsl(var(--color-brand-glow));
+  }
+
+  /* Brand gradient text */
+  .gradient-text {
+    background: linear-gradient(135deg, hsl(250 84% 80%) 0%, hsl(280 70% 70%) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Shimmer loading skeleton */
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      hsl(var(--color-surface-2)) 25%,
+      hsl(var(--color-surface-3)) 50%,
+      hsl(var(--color-surface-2)) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+  }
+
+  /* Tech badge */
+  .tech-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 9999px;
+    font-size: 0.72rem;
+    font-weight: 500;
+    font-family: var(--font-mono), monospace;
+    letter-spacing: 0.02em;
+    border: 1px solid;
+    transition: all 0.15s ease;
+  }
+
+  .tech-badge-lang {
+    color: hsl(var(--color-cyan));
+    border-color: hsl(var(--color-cyan) / 0.3);
+    background: hsl(var(--color-cyan) / 0.08);
+  }
+
+  .tech-badge-framework {
+    color: hsl(var(--color-brand));
+    border-color: hsl(var(--color-brand) / 0.3);
+    background: hsl(var(--color-brand) / 0.08);
+  }
+
+  .tech-badge-infra {
+    color: hsl(var(--color-amber));
+    border-color: hsl(var(--color-amber) / 0.3);
+    background: hsl(var(--color-amber) / 0.08);
+  }
+
+  .tech-badge-db {
+    color: hsl(var(--color-green));
+    border-color: hsl(var(--color-green) / 0.3);
+    background: hsl(var(--color-green) / 0.08);
+  }
+}
+
+/* ══════════════════════════════════════════════════════════
+   ANIMATIONS
+══════════════════════════════════════════════════════════ */
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px hsl(var(--color-brand-glow)); }
+  50%       { box-shadow: 0 0 40px hsl(var(--color-brand) / 0.5); }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.animate-fade-up   { animation: fadeUp 0.4s ease forwards; }
+.animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+.animate-spin-slow  { animation: spin-slow 3s linear infinite; }
+
+/* ══════════════════════════════════════════════════════════
+   CONTENTEDITABLE EDITOR STYLES
+══════════════════════════════════════════════════════════ */
+[contenteditable] {
+  outline: none;
+  caret-color: hsl(var(--color-brand));
+  border-radius: var(--radius-sm);
+  transition: background 0.15s ease, box-shadow 0.15s ease;
+}
+
+[contenteditable]:hover {
+  background: hsl(var(--color-brand) / 0.04);
+}
+
+[contenteditable]:focus {
+  background: hsl(var(--color-brand) / 0.07);
+  box-shadow:
+    0 0 0 1px hsl(var(--color-brand) / 0.4),
+    0 0 12px hsl(var(--color-brand) / 0.15);
+}
+
+/* ══════════════════════════════════════════════════════════
+   PRINT / ATS PDF STYLES
+   Clean vector text — optimal for ATS scanning.
+   All dark mode styles are suppressed; white background only.
+══════════════════════════════════════════════════════════ */
+@media print {
+  /* Reset all dark-mode visuals */
+  :root {
+    --color-bg: 0 0% 100%;
+    --color-surface: 0 0% 100%;
+    --color-text: 0 0% 8%;
+    --color-text-muted: 0 0% 30%;
+  }
+
+  * {
+    background: white !important;
+    color: #111 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    animation: none !important;
+    backdrop-filter: none !important;
+    border-color: #ddd !important;
+  }
+
+  /* Hide UI chrome */
+  .no-print { display: none !important; }
+
+  /* Page setup */
+  @page {
+    size: A4;
+    margin: 16mm 18mm;
+  }
+
+  /* Prevent orphaned headings */
+  h1, h2, h3, h4 {
+    page-break-after: avoid;
+    color: #111 !important;
+  }
+
+  /* Keep project blocks together */
+  .cv-project-block { page-break-inside: avoid; }
+
+  /* Ensure links are visible in print */
+  a::after {
+    content: " (" attr(href) ")";
+    font-size: 0.75em;
+    color: #555 !important;
+  }
+
+  /* Typography for PDF */
+  body {
+    font-family: 'Inter', Arial, sans-serif !important;
+    font-size: 10pt;
+    line-height: 1.5;
+  }
+
+  h1 { font-size: 18pt; }
+  h2 { font-size: 12pt; border-bottom: 1px solid #ccc; padding-bottom: 2pt; }
+  h3 { font-size: 10pt; }
+
+  /* Tech badges in print */
+  .tech-badge {
+    background: #f5f5f5 !important;
+    color: #333 !important;
+    border-color: #ccc !important;
+    font-size: 8pt;
+  }
+}
