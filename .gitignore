@@ -22,8 +22,9 @@ env/
 out/
 build/
 
-# Frontend (separate repo)
-frontend/
+# Frontend node_modules only
+frontend/node_modules/
+frontend/.next/
 
 # Misc
 .DS_Store
