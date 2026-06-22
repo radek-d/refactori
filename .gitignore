@@ -22,6 +22,9 @@ env/
 out/
 build/
 
+# Frontend (separate repo)
+frontend/
+
 # Misc
 .DS_Store
 *.log
