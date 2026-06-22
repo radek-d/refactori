@@ -1,6 +1,7 @@
 from typing import Optional
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from functools import lru_cache
+import os
 
 
 class Settings(BaseSettings):
@@ -21,8 +22,25 @@ class Settings(BaseSettings):
     # Security
     backend_api_secret: str = "change-me-in-production"
 
-    # CORS
-    allowed_origins: list[str] = ["http://localhost:3000"]
+    @property
+    def allowed_origins(self) -> list[str]:
+        """Dynamically build allowed origins from env vars"""
+        origins = [
+            "http://localhost:3000",
+            "http://localhost:8000",
+        ]
+        
+        # Add frontend URL if specified (for production)
+        frontend_url = os.getenv("FRONTEND_URL")
+        if frontend_url:
+            origins.append(frontend_url)
+        
+        # Add any additional origins from comma-separated env var
+        extra_origins = os.getenv("ALLOWED_ORIGINS", "")
+        if extra_origins:
+            origins.extend([o.strip() for o in extra_origins.split(",")])
+        
+        return origins
 
 
 @lru_cache
